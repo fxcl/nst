@@ -1,5 +1,5 @@
 {
-  description = "nix shell for java & gradle";
+  description = "nix shell for java & maven";
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
@@ -20,7 +20,7 @@
         pkgs = import nixpkgs { inherit system overlays; };
       in
       {
-        devShells.default = pkgs.mkShell {
+        devShells.default = pkgs.mkShell rec{
           nativeBuildInputs = with pkgs; [
             openjdk
             maven

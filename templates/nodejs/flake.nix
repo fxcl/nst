@@ -1,9 +1,8 @@
 {
-  description = "Generic nix shell";
+  description = "nix shell for nodejs";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable; # unstable version of nixpkgs
-    # nixpkgs.url = github:nixos/nixpkgs/release-22.11; # stable version of nixpkgs
+    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     flake-utils.url = github:numtide/flake-utils;
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -14,7 +13,6 @@
   outputs = { self, flake-utils, nixpkgs, ... }:
     let
       overlays = [
-        # Other overlays
       ];
     in
     flake-utils.lib.eachDefaultSystem (system:
@@ -24,6 +22,9 @@
       {
         devShells.default = pkgs.mkShell rec{
           nativeBuildInputs = with pkgs; [
+            nodePackages.npm
+            nodePackages.typescript-language-server
+            nodejs
           ];
         };
       });

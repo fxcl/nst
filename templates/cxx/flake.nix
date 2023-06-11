@@ -1,5 +1,5 @@
 {
-  description = "nix shell for zig";
+  description = "nix shell for cpp";
 
   inputs = {
     zig.url = "github:mitchellh/zig-overlay";
@@ -26,7 +26,7 @@
         pkgs = import nixpkgs { inherit system overlays; };
       in
       {
-        devShells.default = pkgs.mkShell {
+        devShells.default = pkgs.mkShell rec{
           buildInputs = with pkgs; [
             clang
             cmake

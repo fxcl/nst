@@ -1,5 +1,5 @@
 {
-  description = "nix shell for java & gradle";
+  description = "nix shell for python";
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
@@ -17,13 +17,19 @@
     in
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system overlays; };
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+        pythonEnv = pkgs.python39.withPackages (pypkgs: with pypkgs; [
+          # Packages here
+        ]);
+
       in
       {
-        devShells.default = pkgs.mkShell rec{
-          nativeBuildInputs = with pkgs; [
-            openjdk
-            gradle
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            pythonEnv
+            nodePackages.pyright
           ];
         };
       });
