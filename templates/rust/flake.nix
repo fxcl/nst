@@ -94,8 +94,10 @@
             IOKit
             Security
           ]
-          pkgconfig openssl
-          libiconv
+            stdenv.cc.cc.lib
+            pkgconfig
+            openssl
+            libiconv
           );
 
           nativeBuildInputs = with pkgs; [
@@ -104,6 +106,11 @@
             rustStable
             #rust-analyzer-unwrapped
           ];
+
+          shellHook = ''
+            export PS1="[$name] \[$txtgrn\]\u@\h\[$txtwht\]:\[$bldpur\]\w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty \[$bldylw\]\$aws_env\[$txtrst\]\$ "
+            export NIX_LDFLAGS="-F${frameworks.CoreFoundation}/Library/Frameworks -framework CoreFoundation $NIX_LDFLAGS";
+          '';
 
           # See https://discourse.nixos.org/t/rust-src-not-found-and-other-misadventures-of-developing-rust-on-nixos/11570/3?u=samuela.
           #RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
