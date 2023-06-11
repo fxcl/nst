@@ -33,6 +33,21 @@
         path = ./java-maven-empty;
         description = "A development environment for java, maven";
       };
+
+      java-gradle = {
+        path = ./java-gradle;
+        description = "A development environment for java, gradle";
+      };
+
+      python-app = {
+        path = ./python/app;
+        description = "A development environment for Python App";
+      };
+
+      python-shell = {
+        path = ./python/shell;
+        description = "A development environment for Python Shell";
+      };
     };
   };
 }
