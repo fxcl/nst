@@ -93,11 +93,11 @@
             CoreServices
             IOKit
             Security
-          ]
             stdenv.cc.cc.lib
             pkgconfig
             openssl
             libiconv
+          ]
           );
 
           nativeBuildInputs = with pkgs; [
