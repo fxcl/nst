@@ -25,23 +25,30 @@
     let
       overlays = [
       ];
+      pythonVersion = "python39";
+
     in
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        machNix = mach-nix.lib.${system};
+        mach = mach-nix.lib.${system};
+        pythonEnv = mach.mkPython {
+          python = pythonVersion;
+          requirements = builtins.readFile ./requirements.txt;
+        };
 
       in
       {
-        devShells.default = pkgs.mkShell rec{
+        devShells.default = pkgs.mkShellNoCC{
           buildInputs = with pkgs; [
-            (machNix.mkPython {
-              python = "python39";
-              requirements = builtins.readFile ./requirements.txt;
-            })
-
+            pythonEnv
             pyright
           ];
+
+          shellHook = ''
+            export PYTHONPATH="${pythonEnv}/bin/python"
+          '';
+
         };
       });
 }
