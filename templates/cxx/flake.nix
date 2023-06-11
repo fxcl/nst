@@ -31,7 +31,6 @@
             clang
             cmake
             cmakeCurses
-
             spdlog
           ];
         };

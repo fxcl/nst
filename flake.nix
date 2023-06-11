@@ -11,6 +11,11 @@
     };
 
     templates = {
+      cxx = {
+        path = ./templates/cxx;
+        description = "A development environment for Cpp.";
+
+      };
       zig = {
         path = ./templates/zig;
         description = "A development environment for Zig.";

@@ -1,5 +1,5 @@
 {
-  description = "nix shell for nodejs";
+  description = "nix shell for Golang";
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
@@ -22,9 +22,11 @@
       {
         devShells.default = pkgs.mkShell rec{
           nativeBuildInputs = with pkgs; [
-            nodePackages.npm
-            nodePackages.typescript-language-server
-            nodejs-16_x
+            git
+            go-outline
+            go_1_19
+            gopls
+            gotools
           ];
         };
       });

@@ -23,15 +23,13 @@
 
   outputs = { self, flake-utils, nixpkgs, mach-nix, ... }:
     let
-      overlays = [
-      ];
       pythonVersion = "python39";
-
     in
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
         mach = mach-nix.lib.${system};
+
         pythonEnv = mach.mkPython {
           python = pythonVersion;
           requirements = builtins.readFile ./requirements.txt;
@@ -39,10 +37,11 @@
 
       in
       {
-        devShells.default = pkgs.mkShellNoCC{
+        devShells.default = pkgs.mkShellNoCC {
           buildInputs = with pkgs; [
             pythonEnv
             pyright
+            poetry
           ];
 
           shellHook = ''

@@ -15,17 +15,10 @@
 
   outputs = { self, flake-utils, nixpkgs, mach-nix, ... }:
     let
-      overlays = [
-      ];
+      pythonVersion = "python39";
     in
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-
-        pythonVersion = "python39";
-
         pkgs = nixpkgs.legacyPackages.${system};
         mach = mach-nix.lib.${system};
 
