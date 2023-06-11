@@ -10,41 +10,54 @@
     };
 
     rust-overlay = {
-      url = "github:mozilla/nixpkgs-mozilla";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:oxalica/rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
   };
 
   outputs = { self, flake-utils, nixpkgs, rust-overlay, ... }:
     let
       overlays = [
-        rust-overlay.overlay
+        rust-overlay.overlays.default
       ];
     in
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system overlays; };
+        rust-version = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+        # my-rust-bin = rust-version.override {
+        #   # extensions = [ "rust-analyzer" "rust-src" ];
+        #     extensions = ["rust-src" ];
+        # };
+
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            rustc
-            cargo
-            clippy
-            rust-analyzer
+          buildInputs = pkgs.lib.optionals pkgs.stdenv.isDarwin (with pkgs.darwin.apple_sdk.frameworks; [
+            CoreFoundation
+            CoreServices
+            IOKit
+            Security
+          ]);
+          packages = [
+            pkgs.cargo-bloat
+            rust-version
+            # my-rust-bin
+            # We want the unwrapped version, "rust-analyzer" (wrapped) comes with nixpkgs' toolchain
 
-            rustfmt
-            rustup
-            clippy
+            pkgs.rust-analyzer-unwrapped
           ];
-
           shellHook = ''
-            rustup install nightly
-            rustup component add rls rust-analysis rust-src
+            export BUCK2_BUILD_PROTOC=${pkgs.protobuf}/bin/protoc
+            export BUCK2_BUILD_PROTOC_INCLUDE=${pkgs.protobuf}/include
           '';
-
           # See https://discourse.nixos.org/t/rust-src-not-found-and-other-misadventures-of-developing-rust-on-nixos/11570/3?u=samuela.
-          RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+          #RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+          RUST_SRC_PATH = "${rust-version}/lib/rustlib/src/rust/library";
+
           RUST_BACKTRACE = 1;
         };
       });
