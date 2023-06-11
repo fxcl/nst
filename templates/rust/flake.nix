@@ -88,11 +88,11 @@
 
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self.checks;
-          buildInputs = pkgs.lib.optionals pkgs.stdenv.isDarwin (with pkgs.darwin.apple_sdk.frameworks; [
-            CoreFoundation
-            CoreServices
-            IOKit
-            Security
+          buildInputs = pkgs.lib.optionals pkgs.stdenv.isDarwin (with pkgs; [
+            darwin.apple_sdk.frameworks.CoreFoundation
+            darwin.apple_sdk.frameworks.CoreServices
+            darwin.apple_sdk.frameworks.IOKit
+            darwin.apple_sdk.frameworks.Security
             stdenv.cc.cc.lib
             pkgconfig
             openssl
