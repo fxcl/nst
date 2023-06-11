@@ -62,8 +62,8 @@
 
           RUSTUP_DIST_SERVER = "https://rsproxy.cn";
           RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
-          RUSTUP_HOME = "~/.local/share/rustup";
-          CARGO_HOME = "~/.local/share/cargo";
+          RUSTUP_HOME = "/Users/kelvin/.local/share/rustup";
+          CARGO_HOME = "/Users/kelvin/.local/share/cargo";
         };
       });
 }
