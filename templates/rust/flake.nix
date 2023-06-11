@@ -59,6 +59,12 @@
           RUST_SRC_PATH = "${rust-version}/lib/rustlib/src/rust/library";
 
           RUST_BACKTRACE = 1;
+
+
+            RUSTUP_DIST_SERVER = "https://rsproxy.cn";
+            RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
+            RUSTUP_HOME = "~/.local/share/rustup";
+            CARGO_HOME = "~/.local/share/cargo";
         };
       });
 }
