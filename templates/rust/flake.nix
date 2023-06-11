@@ -52,6 +52,7 @@
         rustStable =
           pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
         craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
+
         commonArgs = {
           src = craneLib.cleanCargoSource ./.;
           buildInputs = [ ];
@@ -92,7 +93,10 @@
             CoreServices
             IOKit
             Security
-          ]);
+          ]
+          pkgconfig openssl
+          libiconv
+          );
 
           nativeBuildInputs = with pkgs; [
             cargo-nextest
