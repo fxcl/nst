@@ -76,17 +76,18 @@
           partitionType = "count";
         });
 
+        apple_sdk = pkgs.darwin.apple_sdk_11_0;
         buildInputsDarwin =
           if pkgs.stdenv.isDarwin then [
-            apple_sdk_11_0.frameworks.IOKit
-            apple_sdk_11_0.frameworks.AppKit
-            apple_sdk_11_0.frameworks.CoreFoundation
-            apple_sdk_11_0.frameworks.CoreServices
-            apple_sdk_11_0.frameworks.CoreVideo
-            apple_sdk_11_0.frameworks.Foundation
-            #apple_sdk_11_0.frameworks.Metal
-            apple_sdk_11_0.frameworks.Security
-            apple_sdk_11_0.frameworks.SystemConfiguration
+            apple_sdk.frameworks.IOKit
+            apple_sdk.frameworks.AppKit
+            apple_sdk.frameworks.CoreFoundation
+            apple_sdk.frameworks.CoreServices
+            #apple_sdk.frameworks.CoreVideo
+            #apple_sdk.frameworks.Foundation
+            #apple_sdk.frameworks.Metal
+            apple_sdk.frameworks.Security
+            apple_sdk.frameworks.SystemConfiguration
 
           ] else [ ];
 

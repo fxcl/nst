@@ -27,6 +27,7 @@
             go_1_19
             gopls
             gotools
+            godef
           ];
         };
       });
