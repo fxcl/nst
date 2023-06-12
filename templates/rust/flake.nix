@@ -97,7 +97,7 @@
             darwin.apple_sdk.frameworks.Foundation
             darwin.apple_sdk.frameworks.Metal
             darwin.apple_sdk.frameworks.Security
-
+            darwin.apple_sdk.frameworks.SystemConfiguration
             stdenv.cc.cc.lib
             pkgconfig
             openssl
