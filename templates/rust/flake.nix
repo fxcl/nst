@@ -89,15 +89,15 @@
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self.checks;
           buildInputs = pkgs.lib.optionals pkgs.stdenv.isDarwin (with pkgs; [
-            darwin.apple_sdk.frameworks.IOKit
-            darwin.apple_sdk.frameworks.AppKit
-            darwin.apple_sdk.frameworks.CoreFoundation
-            darwin.apple_sdk.frameworks.CoreServices
-            darwin.apple_sdk.frameworks.CoreVideo
-            darwin.apple_sdk.frameworks.Foundation
-            darwin.apple_sdk.frameworks.Metal
-            darwin.apple_sdk.frameworks.Security
-            darwin.apple_sdk.frameworks.SystemConfiguration
+            darwin.apple_sdk_11_0.frameworks.IOKit
+            darwin.apple_sdk_11_0.frameworks.AppKit
+            darwin.apple_sdk_11_0.frameworks.CoreFoundation
+            darwin.apple_sdk_11_0.frameworks.CoreServices
+            darwin.apple_sdk_11_0.frameworks.CoreVideo
+            darwin.apple_sdk_11_0.frameworks.Foundation
+            darwin.apple_sdk_11_0.frameworks.Metal
+            darwin.apple_sdk_11_0.frameworks.Security
+            darwin.apple_sdk_11_0.frameworks.SystemConfiguration
             stdenv.cc.cc.lib
             pkgconfig
             openssl
@@ -114,7 +114,7 @@
 
           shellHook = ''
             export PS1="[$name] \[$txtgrn\]\u@\h\[$txtwht\]:\[$bldpur\]\w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty \[$bldylw\]\$aws_env\[$txtrst\]\$ "
-            export NIX_LDFLAGS="-F${pkgs.darwin.apple_sdk.frameworks.CoreFoundation}/Library/Frameworks -framework CoreFoundation $NIX_LDFLAGS";
+            export NIX_LDFLAGS="-F${pkgs.darwin.apple_sdk_11_0.frameworks.CoreFoundation}/Library/Frameworks -framework CoreFoundation $NIX_LDFLAGS";
           '';
 
           # See https://discourse.nixos.org/t/rust-src-not-found-and-other-misadventures-of-developing-rust-on-nixos/11570/3?u=samuela.
