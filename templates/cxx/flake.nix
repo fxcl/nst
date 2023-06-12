@@ -28,8 +28,10 @@
       {
         devShells.default = pkgs.mkShell rec{
           buildInputs = with pkgs; [
-            clang
+            clang_13
             cmake
+            lld_13
+
             cmakeCurses
             spdlog
           ];

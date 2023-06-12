@@ -76,6 +76,20 @@
           partitionType = "count";
         });
 
+        buildInputsDarwin =
+          if pkgs.stdenv.isDarwin then [
+            apple_sdk_11_0.frameworks.IOKit
+            apple_sdk_11_0.frameworks.AppKit
+            apple_sdk_11_0.frameworks.CoreFoundation
+            apple_sdk_11_0.frameworks.CoreServices
+            apple_sdk_11_0.frameworks.CoreVideo
+            apple_sdk_11_0.frameworks.Foundation
+            #apple_sdk_11_0.frameworks.Metal
+            apple_sdk_11_0.frameworks.Security
+            apple_sdk_11_0.frameworks.SystemConfiguration
+
+          ] else [ ];
+
       in
       {
         checks = {
@@ -88,22 +102,14 @@
 
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self.checks;
-          buildInputs = pkgs.lib.optionals pkgs.stdenv.isDarwin (with pkgs; [
-            darwin.apple_sdk_11_0.frameworks.IOKit
-            darwin.apple_sdk_11_0.frameworks.AppKit
-            darwin.apple_sdk_11_0.frameworks.CoreFoundation
-            darwin.apple_sdk_11_0.frameworks.CoreServices
-            darwin.apple_sdk_11_0.frameworks.CoreVideo
-            darwin.apple_sdk_11_0.frameworks.Foundation
-            darwin.apple_sdk_11_0.frameworks.Metal
-            darwin.apple_sdk_11_0.frameworks.Security
-            darwin.apple_sdk_11_0.frameworks.SystemConfiguration
+
+          buildInputs = with pkgs; [
             stdenv.cc.cc.lib
             pkgconfig
             openssl
             libiconv
-          ]
-          );
+          ] ++ buildInputsDarwin;
+
 
           nativeBuildInputs = with pkgs; [
             cargo-nextest
